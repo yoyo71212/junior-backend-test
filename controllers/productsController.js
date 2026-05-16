@@ -41,7 +41,7 @@ const updateProduct = async (req, res) => {
         const { id } = req.params;
         const body = req.body;
         
-        const product = await Product.findByIdAndUpdate(id, body, { new: true });
+        const product = await Product.findByIdAndUpdate(id, body, { returnDocument: 'after' });
         if (!product) {
             return res.status(404).send('Product not found');
         }
@@ -54,7 +54,7 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         const product = await Product.findByIdAndDelete(id);
         if (!product) {
             return res.status(404).send('Product not found');

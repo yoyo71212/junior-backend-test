@@ -9,13 +9,19 @@ const {
     deleteProduct
 } = require('../controllers/productsController');
 
-router.post('/', addProduct);
+const {
+    validateProductCreate,
+    validateProductUpdate,
+    handleValidationErrors
+} = require('../middleware/validationMiddleware');
+
+router.post('/', validateProductCreate, handleValidationErrors, addProduct);
 
 router.get('/', getProducts);
 
 router.get('/:id', getProductById);
 
-router.put('/:id', updateProduct);
+router.put('/:id', validateProductUpdate, handleValidationErrors, updateProduct);
 
 router.delete('/:id', deleteProduct);
 
