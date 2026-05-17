@@ -9,20 +9,22 @@ const {
     deleteProduct
 } = require('../controllers/productsController');
 
+const { protectAdmin } = require("../middleware/protectAdmin");
+
 const {
     validateProductCreate,
     validateProductUpdate,
     handleValidationErrors
 } = require('../middleware/validationMiddleware');
 
-router.post('/', validateProductCreate, handleValidationErrors, addProduct);
+router.post('/', protectAdmin, validateProductCreate, handleValidationErrors, addProduct);
 
 router.get('/', getProducts);
 
 router.get('/:id', getProductById);
 
-router.put('/:id', validateProductUpdate, handleValidationErrors, updateProduct);
+router.put('/:id', protectAdmin, validateProductUpdate, handleValidationErrors, updateProduct);
 
-router.delete('/:id', deleteProduct);
+router.delete('/:id', protectAdmin, deleteProduct);
 
 module.exports = router;
