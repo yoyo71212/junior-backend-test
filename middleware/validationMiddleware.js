@@ -15,11 +15,11 @@ const validateProductCreate = [
 
     body('price')
         .exists().withMessage('Price is required').bail()
-        .isFloat({ min: 0 }).withMessage("Price must be a non-negative float"),
+        .isFloat({ gt: 0 }).withMessage("Price must be a positive float"),
 
     body('quantity')
         .exists().withMessage('Quantity is required').bail()
-        .isInt({ min: 0 }).withMessage('Quantity must be a non-negative integer')
+        .isInt({ gte: 0 }).withMessage('Quantity must be a non-negative integer')
 ];
 
 const validateProductUpdate = [
@@ -37,11 +37,11 @@ const validateProductUpdate = [
 
     body('price')
         .optional()
-        .isFloat({ min: 0 }).withMessage("Price must be a non-negative float"),
+        .isFloat({ gt: 0 }).withMessage("Price must be a positive float"),
 
     body('quantity')
         .optional()
-        .isInt({ min: 0 }).withMessage('Quantity must be a non-negative integer')
+        .isInt({ gte: 0 }).withMessage('Quantity must be a non-negative integer')
 ];
 
 const handleValidationErrors = (req, res, next) => {
